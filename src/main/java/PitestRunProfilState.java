@@ -11,7 +11,9 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.jps.PathUtils;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 public class PitestRunProfilState extends JavaCommandLineState {
@@ -38,8 +40,14 @@ public class PitestRunProfilState extends JavaCommandLineState {
 
         myNewParams.getClassPath().add(PathUtil.getJarPathForClass(getClass()));
         myNewParams.getClassPath().add(getEnvironment().getProject().getBaseDir().getPath());
+        String pluginClasspath = PathUtil.getParentPath(PathUtil.getJarPathForClass(this.getClass()));
+        myNewParams.getClassPath().add(pluginClasspath + "/lib/hamcrest-core-1.3.jar");
+        myNewParams.getClassPath().add(pluginClasspath + "/lib/junit-4.12.jar");
+        myNewParams.getClassPath().add(pluginClasspath + "/lib/pitest-1.1.11.jar");
+        myNewParams.getClassPath().add(pluginClasspath + "/lib/pitest-command-line-1.1.11.jar");
 
         JavaParametersUtil.configureModule(actualModule, myNewParams, JavaParameters.JDK_AND_CLASSES_AND_TESTS, null);
+
         //JavaParametersUtil.configureConfiguration(myNewParams, importantConfiguration);
 
 //        Module[] list = ModuleManager.getInstance(getEnvironment().getProject()).getModules();

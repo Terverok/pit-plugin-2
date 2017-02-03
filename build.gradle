@@ -7,14 +7,30 @@ buildscript {
         maven {
             url "http://dl.bintray.com/jetbrains/intellij-plugin-service"
         }
+        flatDir {
+            dirs 'lib'
+        }
+
     }
     dependencies {
         classpath "gradle.plugin.org.jetbrains:gradle-intellij-plugin:0.1.10"
+
     }
 
 }
 
 apply plugin: 'idea'
 apply plugin: 'java'
+
+dependencies {
+    runtime files('lib/pitest-1.1.11.jar')
+    runtime files('lib/pitest-command-line-1.1.11.jar')
+    runtime files('lib/junit-4.12.jar')
+    runtime files('lib/hamcrest-core-1.3.jar')
+
+}
+
 apply plugin: 'org.jetbrains.intellij'
+
+
 
